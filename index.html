@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="catOS">
+  
+  <title>catOS v9</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+  <div class="desktop">
+    <div class="top-bar">
+      <div class="top-bar-left">
+        <span class="top-cat-icon">🐱</span>
+        <span class="menu-item bold-text" id="os-version-tag">catOS v9.0</span>
+        <span class="menu-item">Finder</span>
+        <span class="menu-item">File</span>
+        <span class="menu-item">Edit</span>
+      </div>
+      <div class="top-bar-right">
+        <span class="bar-icon">📶</span>
+        <span id="top-bar-clock" class="menu-item">Sun, Jun 28 7:52 PM</span>
+      </div>
+    </div>
+
+    <div class="desktop-icons-right" id="desktop-shortcuts">
+      <div class="desktop-icon" onclick="openWindow('FinderWin')">
+        <div class="icon-img folder-bg">📁</div>
+        <span>Finder</span>
+      </div>
+      <div class="desktop-icon" onclick="openWindow('SettingsWin')">
+        <div class="icon-img settings-bg">⚙️</div>
+        <span>Settings</span>
+      </div>
+      <div class="desktop-icon" onclick="openWindow('SafariWin')">
+        <div class="icon-img safari-bg">🧭</div>
+        <span>Safari</span>
+      </div>
+    </div>
+
+    <div class="window" id="FinderWin" style="width: 330px; height: 240px;">
+      <div class="window-header">
+        <span id="finder-title">📁 Finder - Root</span>
+        <button class="win-close" onclick="closeWindow('FinderWin')">✕</button>
+      </div>
+      <div class="window-body" style="display: flex; flex-direction: column; height: calc(100% - 40px); padding: 0;">
+        <div class="finder-toolbar">
+          <button class="toolbar-btn" id="back-btn" onclick="goBackFolder()" disabled>⬅️ Back</button>
+          <button class="toolbar-btn" onclick="createNewFolderPrompt()">➕ New Folder</button>
+        </div>
+        <div class="finder-grid" id="finder-view-grid"></div>
+      </div>
+    </div>
+
+    <div class="window" id="SettingsWin" style="width: 320px; height: 230px;">
+      <div class="window-header">
+        <span>⚙️ Settings</span>
+        <button class="win-close" onclick="closeWindow('SettingsWin')">✕</button>
+      </div>
+      <div class="window-body">
+        <div style="font-weight: bold; margin-bottom: 6px; font-size: 13px;">System Control Center</div>
+        <div class="update-box">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px;">
+            <span style="font-size: 11px; color: #b2bec3;">Build: <b id="current-version-text" style="color: white;">v9.0</b></span>
+            <span class="update-badge" id="update-status-badge">Update Ready</span>
+          </div>
+          <div id="update-action-area">
+            <p id="update-desc" style="margin: 0 0 8px 0; font-size: 10px; color: #dfe6e9;">catOS v9.1 includes enhanced system stability and the 🎮 Widget Tool.</p>
+            <button class="action-btn" id="install-update-btn" onclick="startSystemUpdate()">Install Update</button>
+          </div>
+          <div id="progress-container" style="display: none; margin-top: 6px;">
+            <div style="font-size: 10px; margin-bottom: 4px; color: #a55eea;" id="progress-text">Downloading... 0%</div>
+            <div class="progress-bar-bg">
+              <div class="progress-bar-fill" id="update-progress-bar"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="SafariWin">
+      <div class="window-header">
+        <span>🧭 Safari Browser</span>
+        <button class="win-close" onclick="closeWindow('SafariWin')">✕</button>
+      </div>
+      <div class="window-body">Web surfing workspace environment.</div>
+    </div>
+
+    <div class="window" id="ConnectWin" style="width: 360px; height: 240px;">
+      <div class="window-header">
+        <span>📲 catConnect - Second Display</span>
+        <button class="win-close" onclick="closeWindow('ConnectWin')">✕</button>
+      </div>
+      <div class="window-body" style="padding: 0; background: #000; height: calc(100% - 34px); position: relative;">
+        <div class="virtual-monitor" id="ext-monitor">
+          <div class="monitor-bar">🖥️ Extended Desktop Space</div>
+          <div class="monitor-desktop-space">
+            <div class="mini-app-shortcut" onclick="triggerMiniDisplayApp()">
+              <span>🎨</span>
+              <p>SketchPad</p>
+            </div>
+            <div class="display-status-tag">Status: Active Extension</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="window" id="StoreWin">
+      <div class="window-header">
+        <span>🏪 catOS App Store</span>
+        <button class="win-close" onclick="closeWindow('StoreWin')">✕</button>
+      </div>
+      <div class="window-body">catOS Application Marketplace.</div>
+    </div>
+
+    <div class="dock-container">
+      <div class="dock-pill">
+        <div class="dock-btn cat-btn">🐱</div>
+        <div class="dock-btn folder-bg" onclick="openWindow('FinderWin')">📁</div>
+        <div class="dock-btn settings-bg" onclick="openWindow('SettingsWin')">⚙️</div>
+        <div class="dock-btn safari-bg" onclick="openWindow('SafariWin')">🧭</div>
+        <div class="dock-btn connect-bg" onclick="openWindow('ConnectWin')">📲</div>
+        <div class="dock-btn store-dock-bg" onclick="openWindow('StoreWin')">🏪</div>
+        <div class="dock-btn notes-bg">📝</div>
+        <div class="dock-btn music-bg">🎵</div>
+        <div class="dock-divider"></div>
+        <div class="dock-clock">
+          <div id="dock-time">7:52 PM</div>
+          <div id="dock-date">Jun 28</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
